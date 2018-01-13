@@ -1,26 +1,33 @@
+<?php
+spl_autoload_register(function ($class_name) {
+    require_once 'engine/classes/' . $class_name . '.php';
+});
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Nik's market</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main_new.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="shortcut icon" href="images/logo.png" type="image/png">
+    <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="js/nouislider.min.js" type="text/javascript"></script>
 </head>
-
 <body>
 <div class="wrapper">
     <header class="header">
         <div class="container box-flex">
             <div class="header-left box-flex">
-                <a href="index.html" class="logo">
-                    <img src="images/logo.png" alt="Logo">BRAN<span>D</span>
+                <a href="<?= $_SERVER['SCRIPT_NAME'] ?>" class="logo">
+                    <img src="images/logo.png" alt="Logo">
+                    BRAN<span>D</span>
                 </a>
-                <form class="box-flex">
+                <form class="box-flex header-search-box">
                     <button id="browse-btn" type="button" class="btn-browse">Browse <span
-                            class="fa fa-caret-down"></span>
+                                class="fa fa-caret-down"></span>
                     </button>
                     <input type="text" placeholder="Search for Item..." class="search-input" required/>
                     <button type="submit" class="btn-search"><span class="fa fa-search"></span></button>
@@ -37,130 +44,24 @@
     </header>
     <nav class="container nav">
         <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="products.html">Man</a></li>
-            <li><a href="products.html">Women</a></li>
-            <li><a href="products.html">Kids</a></li>
-            <li><a href="products.html">Accoseriese</a></li>
-            <li><a href="products.html">Featured</a></li>
-            <li><a href="products.html">Hot Deals </a></li>
+            <li><a href="<?= $_SERVER['SCRIPT_NAME'] ?>" class="active">Home</a></li>
+            <li><a href="?page=products">Man</a></li>
+            <li><a href="?page=products">Women</a></li>
+            <li><a href="?page=products">Kids</a></li>
+            <li><a href="?page=products">Accoseriese</a></li>
+            <li><a href="?page=products">Featured</a></li>
+            <li><a href="?page=products">Hot Deals </a></li>
         </ul>
     </nav>
-    <div class="top-article">
-        <div class="container">
-            <h1 class="top-article-title">New Arrivals</h1>
-            <nav class="top-article-nav">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li>/</li>
-                    <li><a href="#">Men</a></li>
-                    <li>/</li>
-                    <li><a class="active" href="#">New Arrivals</a></li>
-                </ul>
-            </nav>
-        </div>
+    <div>
+        <?php
+        if (!isset($_GET['page']) || $_GET['page'] == 'index') {
+            require_once 'pages/index.php';
+        } else {
+            require_once 'pages/' . $_GET['page'] . '.php';
+        }
+        ?>
     </div>
-
-    <div class="container content">
-        <div class="shopping-cart-body">
-            <table class="shopping-cart-body-table">
-                <thead>
-                <tr>
-                    <th class="text-align-left" colspan="2">Product Details</th>
-                    <th>unite Price</th>
-                    <th>Quantity</th>
-                    <th>shipping</th>
-                    <th>Subtotal</th>
-                    <th>ACTION</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="product.html"><img src="images/products/product-1.jpg" alt="" class="product-img"></a>
-                    </td>
-                    <td>
-                        <div class="description">
-                            <h3><a href="product.html">Mango People T-shirt</a></h3>
-                            <ul>
-                                <li>Color: <span>Red </span></li>
-                                <li>Size: <span>Xll</span></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>$150</td>
-                    <td><input class="quantity-input" type="text" value="2" title="quantity"></td>
-                    <td>FREE</td>
-                    <td>$300</td>
-                    <td><a href="#"><span class="fa fa-times-circle"></span></a></td>
-                </tr>
-                <tr>
-                    <td><a href="product.html"><img src="images/products/product-2.jpg" alt="" class="product-img"></a>
-                    </td>
-                    <td>
-                        <div class="description">
-                            <h3><a href="product.html">Mango People T-shirt</a></h3>
-                            <ul>
-                                <li>Color: <span>Red </span></li>
-                                <li>Size: <span>Xll</span></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>$150</td>
-                    <td><input class="quantity-input" type="text" value="2" title="quantity"></td>
-                    <td>FREE</td>
-                    <td>$300</td>
-                    <td><a href="#"><span class="fa fa-times-circle"></span></a></td>
-                </tr>
-                <tr>
-                    <td><a href="product.html"><img src="images/products/product-8.jpg" alt="" class="product-img"></a>
-                    </td>
-                    <td>
-                        <div class="description">
-                            <h3><a href="product.html">Mango People T-shirt</a></h3>
-                            <ul>
-                                <li>Color: <span>Red </span></li>
-                                <li>Size: <span>Xll</span></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>$150</td>
-                    <td><input class="quantity-input" type="text" value="2" title="quantity"></td>
-                    <td>FREE</td>
-                    <td>$300</td>
-                    <td><a href="#"><span class="fa fa-times-circle"></span></a></td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="shopping-cart-body-clear-and-continue-shopping">
-                <a href="#">CLEAR SHOPPING CART</a>
-                <a href="products.html">CONTINUE sHOPPING</a>
-            </div>
-            <div class="shopping-cart-body-deal">
-                <div class="shopping-cart-body-deal-addresses">
-                    <div class="title">Shipping Adress</div>
-                    <select title="city">
-                        <option value="1" selected>Bangladesh</option>
-                    </select>
-                    <input type="text" title="state" placeholder="State">
-                    <input type="text" title="postcode" placeholder="Postcode / Zip">
-                    <button>get a quote</button>
-                </div>
-                <div class="shopping-cart-body-deal-discount">
-                    <div class="title">coupon discount</div>
-                    <div class="sub-title">Enter your coupon code if you have one</div>
-                    <input type="text" title="state" placeholder="State">
-                    <button>Apply coupon</button>
-                </div>
-                <div class="shopping-cart-body-deal-total">
-                    <div class="sub-title">Sub total <span class="price">$900</span></div>
-                    <div class="title">GRAND total <span class="price">$900</span></div>
-                    <hr/>
-                    <a href="checkout.html">proceed to checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="subscribe">
         <div class="container">
             <div>
@@ -291,13 +192,13 @@
     <div id="main-cart-body" class="main-cart-body">
 
     </div>
-    <a href="checkout.html" class="checkout-btn">Checkout</a>
-    <a href="shopping-cart.html" class="go-to-cart-btn">Go to cart</a>
+    <a href="?page=checkout" class="checkout-btn">Checkout</a>
+    <a href="?page=shopping-cart" class="go-to-cart-btn">Go to cart</a>
 </div>
-<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <script src="js/classes/Container.js" type="text/javascript"></script>
 <script src="js/classes/Cart.js" type="text/javascript"></script>
 </body>
 
 </html>
+

@@ -20,6 +20,7 @@ $(function () {
             $price_min.text("$" + Math.round(value));
         }
     });
+    console.log(slider);
 
     $('.products-left-panel-menu-title').on('click', function () {
         productsLeftPanelMenuShow(this);

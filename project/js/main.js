@@ -36,7 +36,7 @@ $(function () {
     $('.products-item').on('click', '.products-item-hover, .products-item-title', function (e) {
         if (e.target !== this)
             return;
-        goToUrl('product.html')
+        goToUrl('?page=product')
     });
 
     $('.add-to-cart-btn').on('click', function (e) {
