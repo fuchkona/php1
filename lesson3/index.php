@@ -49,9 +49,9 @@ while (!feof($f)) {
     array_push($russia_cities[$l[0]], $l[1]);
 }
 fclose($f);
-//foreach ($russia_cities as $district => $cities) {
-//    echo "<b>$district:</b><br>- " . implode(', ', $cities) . "<br>";
-//}
+foreach ($russia_cities as $district => $cities) {
+    echo "<b>$district:</b><br>- " . implode(', ', $cities) . "<br>";
+}
 ?>
 <hr>
 <h2>Task 4</h2>
@@ -87,9 +87,9 @@ function rus_to_lat($line)
     return strtr($line, $letters);
 }
 
-//foreach ($russia_cities as $district => $cities) {
-//    echo "<b>" . rus_to_lat($district) . ":</b><br>- " . rus_to_lat(implode(', ', $cities)) . "<br>";
-//}
+foreach ($russia_cities as $district => $cities) {
+    echo "<b>" . rus_to_lat($district) . ":</b><br>- " . rus_to_lat(implode(', ', $cities)) . "<br>";
+}
 ?>
 <hr>
 <h2>Task 5</h2>
@@ -99,13 +99,82 @@ function space_to_underline($line)
     return trim(preg_replace('/\s/', '_', $line), '-');
 }
 
-//foreach ($russia_cities as $district => $cities) {
-//    echo "<b>" . space_to_underline($district) . ":</b><br>--" . space_to_underline(implode(', ', $cities)) . "<br>";
-//}
+foreach ($russia_cities as $district => $cities) {
+    echo "<b>" . space_to_underline($district) . ":</b><br>" . space_to_underline(implode(', ', $cities)) . "<br>";
+}
 ?>
 <hr>
 <h2>Task 6</h2>
-<a href="task6/index.php" target="_blank">TASK 6 solution</a>
+<?php
+$menu_array = [
+    ['title' => 'Menu 1', 'url' => '#'],
+    ['title' => 'Menu 2', 'url' => '#'],
+    ['title' => 'Menu 3', 'url' => '#', 'submenu' => [
+        ['title' => 'Submenu 1', 'url' => '#'],
+        ['title' => 'Submenu 2', 'url' => '#'],
+        ['title' => 'Submenu 3', 'url' => '#'],
+        ['title' => 'Submenu 4', 'url' => '#', 'submenu' => [
+            ['title' => 'SubSubmenu 1', 'url' => '#'],
+            ['title' => 'SubSubmenu 2', 'url' => '#'],
+            ['title' => 'SubSubmenu 3', 'url' => '#'],
+            ['title' => 'SubSubmenu 4', 'url' => '#'],
+            ['title' => 'SubSubmenu 5', 'url' => '#'],
+        ]],
+        ['title' => 'Submenu 5', 'url' => '#'],
+    ]],
+    ['title' => 'Menu 4', 'url' => '#'],
+    ['title' => 'Menu 5', 'url' => '#'],
+    ['title' => 'Menu 6', 'url' => '#', 'submenu' => [
+        ['title' => 'Submenu 1', 'url' => '#'],
+        ['title' => 'Submenu 2', 'url' => '#', 'submenu' => [
+            ['title' => 'SubSubmenu 1', 'url' => '#'],
+            ['title' => 'SubSubmenu 2', 'url' => '#'],
+            ['title' => 'SubSubmenu 3', 'url' => '#'],
+            ['title' => 'SubSubmenu 4', 'url' => '#'],
+            ['title' => 'SubSubmenu 5', 'url' => '#'],
+        ]],
+        ['title' => 'Submenu 3', 'url' => '#'],
+        ['title' => 'Submenu 4', 'url' => '#'],
+        ['title' => 'Submenu 5', 'url' => '#'],
+    ]],
+    ['title' => 'Menu 7', 'url' => '#'],
+    ['title' => 'Menu 8', 'url' => '#'],
+];
+function getMenu()
+{
+    global $menu_array;
+    $result = "<ul>";
+    foreach ($menu_array as $item) {
+        if (!key_exists('submenu', $item)) {
+            $result .= getMenuItem($item['title'], $item['url']);
+        } else {
+            $result .= getSubmenuItem($item['title'], $item['url'], $item['submenu']);
+        }
+    }
+    $result .= "</ul>";
+    return $result;
+}
+
+function getMenuItem($title, $url)
+{
+    return "<li><a href='$url'>$title</a></li>";
+}
+function getSubmenuItem($title, $url, $menu)
+{
+    $result = "<li><a href='$url'>$title</a><ul>";
+    foreach ($menu as $item) {
+        if (!key_exists('submenu', $item)) {
+            $result .= getMenuItem($item['title'], $item['url']);
+        } else {
+            $result .= getSubmenuItem($item['title'], $item['url'], $item['submenu']);
+        }
+    }
+    $result .= "</ul></li>";
+    return $result;
+}
+
+echo getMenu();
+?>
 <hr>
 <h2>Task 7</h2>
 <?php
@@ -134,5 +203,16 @@ get_cities_starts_with_letter($russia_cities, 'К');
 ?>
 <hr>
 <h2>Task 9</h2>
+<?php
+function rus_to_url($line)
+{
+    global $letters;
+    return trim(preg_replace('/\s/', '_', strtr($line, $letters)), '-');
+}
+
+foreach ($russia_cities as $district => $cities) {
+    echo "<b>" . rus_to_url($district) . ":</b><br>" . rus_to_url(implode(', ', $cities)) . "<br>";
+}
+?>
 </body>
 </html>
