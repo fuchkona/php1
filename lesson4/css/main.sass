@@ -1,0 +1,42 @@
+*
+  margin: 0
+  padding: 0
+
+body
+  display: flex
+  justify-content: center
+
+hr
+  border: .5px solid lightgray
+  margin: 5px 0
+
+h2
+  margin: 5px 0
+
+.main-container
+  width: 80%
+  box-shadow: 0 0 3px gray
+  border-radius: 15px
+  padding: 15px
+
+.gallery
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-wrap: wrap
+  padding: 5px 5px
+  & a
+    display: block
+    height: 100px
+    margin: 5px
+    & img
+      height: 100%
+
+button
+  padding: 5px
+  background-color: white
+  border: 1px solid lightgray
+  border-radius: 5px
+  &:hover
+    background-color: lightgray
+    border-color: #bcbcbc
