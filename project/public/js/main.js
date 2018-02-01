@@ -32,11 +32,10 @@ $(function () {
         $panel.toggleClass('show');
     }
 
-
     $('.products-item').on('click', '.products-item-hover, .products-item-title', function (e) {
         if (e.target !== this)
             return;
-        goToUrl('?page=product')
+        goToUrl('/product')
     });
 
     $('.add-to-cart-btn').on('click', function (e) {
