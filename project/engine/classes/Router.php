@@ -27,6 +27,7 @@ class Router
                 self::$params[$params[$i]] = $params[$i + 1];
             }
         }
+        require_once HOME . '/ui/layouts/main.php';
     }
 
     /**
