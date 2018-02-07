@@ -13,6 +13,7 @@ class User
 {
     private $u_id;
     private $login;
+    private $name;
     private $pass;
     private $role;
 
@@ -34,6 +35,7 @@ class User
         if (!is_null($this->u_id) && is_numeric($this->u_id)) {
             if ($row = DB::getRow("SELECT * FROM `users` WHERE `u_id` = " . DB::esc($this->u_id))) {
                 $this->login = $row['login'];
+                $this->name = $row['name'];
                 $this->pass = $row['pass'];
                 $this->role = $row['role'];
 
@@ -46,9 +48,9 @@ class User
     public function save()
     {
         if (!is_null($this->u_id) && is_numeric($this->u_id)) {
-            DB::update("UPDATE `users` SET `login` = '" . DB::esc($this->login) . "', `pass` = '" . DB::esc($this->pass) . "', `role` = " . DB::esc($this->role) . " WHERE `u_id` = " . DB::esc($this->u_id));
+            return DB::update("UPDATE `users` SET `login` = '" . DB::esc($this->login) . "', `name` = '" . DB::esc($this->name) . "',`pass` = '" . DB::esc($this->pass) . "', `role` = " . DB::esc($this->role) . " WHERE `u_id` = " . DB::esc($this->u_id));
         } else {
-            $this->u_id = DB::insert("INSERT INTO `users`(`login`, `pass`) VALUES ('" . DB::esc($this->login) . "', '" . DB::esc($this->pass) . "');");
+            return $this->u_id = DB::insert("INSERT INTO `users`(`login`,`name`, `pass`) VALUES ('" . DB::esc($this->login) . "', '" . DB::esc($this->name) . "', '" . DB::esc($this->pass) . "');");
         }
     }
 
@@ -63,6 +65,7 @@ class User
         foreach (DB::getRows("SELECT * FROM `users`;") as $db_user) {
             $user = new User($db_user['u_id']);
             $user->setLogin($db_user['login']);
+            $user->setName($db_user['name']);
             $user->setPass($db_user['pass']);
             $user->setRole($db_user['role']);
             $users[] = $user;
@@ -100,6 +103,22 @@ class User
     public function setLogin($login)
     {
         $this->login = $login;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

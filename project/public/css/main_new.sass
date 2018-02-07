@@ -37,6 +37,12 @@ body
   padding: 0 30px
   align-items: center
 
+.spaced-container
+  width: $site-width
+  margin: 30px auto
+  padding: 0 30px
+  align-items: center
+
 .header
   border-bottom: 1px solid #ececec
 
@@ -72,6 +78,32 @@ body
 
 .header-search-box
   margin-top: 6px
+
+.text-title
+  color: #222222
+  font-family: Lato, serif
+  font-size: 18px
+  font-weight: 600
+
+.text-input
+  min-width: 40%
+  padding: 18px 20px
+  border: 1px solid #eaeaea
+
+.btn
+  display: block
+  padding: 5px 10px
+  text-decoration: none
+  margin: 3px 0 6px
+  font-family: Lato, serif
+  border: none
+  cursor: pointer
+  &-block
+    width: 100%
+  &-big
+    margin: 6px 0
+    padding: 10px 15px
+    font-size: 22px
 
 .btn-browse
   width: 88px
@@ -141,6 +173,7 @@ body
 
 .btn-red
   background-color: #f16d7f
+  outline: 1px solid #f16d7f
   color: #ffffff
   transition: background-color 0.2s, color 0.2s, outline 0.2s
   &:focus
@@ -1484,3 +1517,20 @@ body
       border: 1px solid #ffffff
       background-color: #4a4a4a
       color: #ffffff
+
+.my-account-panel
+  position: absolute
+  top: 0
+  left: 0
+  width: 262px
+  background-color: white
+  border: 1px solid lightgray
+  border-radius: 5px
+  padding: 15px
+  visibility: hidden
+  opacity: 0
+  transition: visibility 0s, opacity 0.3s ease-in-out
+  z-index: 777
+  &.show
+    visibility: visible
+    opacity: 1

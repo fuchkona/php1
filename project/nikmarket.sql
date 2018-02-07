@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 06 2018 г., 15:11
+-- Время создания: Фев 07 2018 г., 15:13
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -44,7 +44,8 @@ CREATE TABLE `goods` (
 
 CREATE TABLE `users` (
   `u_id` int(11) NOT NULL,
-  `login` varchar(300) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `login` varchar(150) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `role` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -53,8 +54,10 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`u_id`, `login`, `pass`, `role`) VALUES
-(1, 'nikita', '$2y$10$VsjG5mseWsy78F4K3UO6tOcWWZVMsQpWFpTQ4SjDyxa5tEeR08SrS', 0);
+INSERT INTO `users` (`u_id`, `name`, `login`, `pass`, `role`) VALUES
+(1, '', 'nikita', '$2y$10$VsjG5mseWsy78F4K3UO6tOcWWZVMsQpWFpTQ4SjDyxa5tEeR08SrS', 0),
+(2, 'Testerov', 'test1', '$2y$10$j0OA1FOJESbN5cZDygGDhOSsxqDrvw1Vkh3oRdg9qM3izAUyXCQrW', 0),
+(3, 'Testerov', 'test2', '$2y$10$VTbaGjMPQRspGWPLMFSZAunOuB.3ozWnhRKS7vblN5IheNHCXlavi', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -70,7 +73,8 @@ ALTER TABLE `goods`
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`u_id`);
+  ADD PRIMARY KEY (`u_id`),
+  ADD UNIQUE KEY `login` (`login`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -86,7 +90,7 @@ ALTER TABLE `goods`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

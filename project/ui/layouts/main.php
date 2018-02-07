@@ -1,5 +1,6 @@
 <?php
 use engine\classes\Router;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,18 +17,27 @@ use engine\classes\Router;
 </head>
 <body>
 <div class="wrapper">
-    <?php require_once __DIR__ . '/main/header.php'?>
-    <?php require_once __DIR__ . '/main/top_navigation.php'?>
+    <?php require_once __DIR__ . '/main/header.php' ?>
+    <?php require_once __DIR__ . '/main/top_navigation.php' ?>
     <!-- Content -->
     <div>
-        <?php require_once __DIR__ . '/../pages/' . Router::getCurrentPage() . '.php'; ?>
+        <?php
+        if (Router::getCurrentPage()) {
+            require_once __DIR__ . '/../pages/' . Router::getCurrentPage() . '.php';
+        } else {
+            ?>
+            <h2>Sorry! Page not found!</h2>
+            <?php
+        }
+        ?>
     </div>
-    <?php require_once __DIR__ . '/main/subscribe.php'?>
-    <?php require_once __DIR__ . '/main/bottom_navigation.php'?>
-    <?php require_once __DIR__ . '/main/footer.php'?>
+    <?php require_once __DIR__ . '/main/subscribe.php' ?>
+    <?php require_once __DIR__ . '/main/bottom_navigation.php' ?>
+    <?php require_once __DIR__ . '/main/footer.php' ?>
 </div>
 <?php require_once __DIR__ . '/main/browse_categories.php' ?>
 <?php require_once __DIR__ . '/main/main_cart.php' ?>
+<?php require_once __DIR__ . '/main/my_account.php' ?>
 <script src="/js/main.js" type="text/javascript"></script>
 <script src="/js/classes/Container.js" type="text/javascript"></script>
 <script src="/js/classes/Cart.js" type="text/javascript"></script>

@@ -18,7 +18,7 @@
             <a id="main-cart-btn" class="btn-cart">
                 <img src="/images/cart.png" alt="Cart">
             </a>
-            <button class="btn-my-account btn-red">My Account <span class="fa fa-caret-down"></span></button>
+            <button id="my-account-btn" class="btn-my-account btn-red">My Account <span class="fa fa-caret-down"></span></button>
         </div>
     </div>
 </header>
