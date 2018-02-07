@@ -30,18 +30,22 @@ class User
         $this->load();
     }
 
-    public function load()
+    public function load($login = null)
     {
-        if (!is_null($this->u_id) && is_numeric($this->u_id)) {
-            if ($row = DB::getRow("SELECT * FROM `users` WHERE `u_id` = " . DB::esc($this->u_id))) {
-                $this->login = $row['login'];
-                $this->name = $row['name'];
-                $this->pass = $row['pass'];
-                $this->role = $row['role'];
-
-            } else {
-                $this->u_id = null;
-            }
+        $sql = null;
+        if ($login) {
+            $sql = "SELECT * FROM `users` WHERE `login` LIKE '" . DB::esc($login) . "'";
+        } elseif (!is_null($this->u_id) && is_numeric($this->u_id)) {
+            $sql = "SELECT * FROM `users` WHERE `u_id` = " . DB::esc($this->u_id);
+        }
+        if ($sql && $row = DB::getRow($sql)) {
+            $this->u_id = $row['u_id'];
+            $this->login = $row['login'];
+            $this->name = $row['name'];
+            $this->pass = $row['pass'];
+            $this->role = $row['role'];
+        } else {
+            $this->u_id = null;
         }
     }
 

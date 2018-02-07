@@ -21,16 +21,12 @@ class Router
     public static function init() {
         $path = explode('/', $_SERVER['REQUEST_URI']);
         self::$current_page = $path[1] ? $path[1] : 'index';
-        if (!file_exists(HOME . '/ui/pages/' . self::$current_page . '.php')) {
-            self::$current_page = null;
-        }
         $params = array_slice($path, 2);
         if (count($params) > 1) {
             for ($i = 0; $i < count($params) - 1; $i += 2) {
                 self::$params[$params[$i]] = $params[$i + 1];
             }
         }
-        require_once HOME . '/ui/layouts/main.php';
     }
 
     /**
@@ -39,6 +35,14 @@ class Router
     public static function getCurrentPage()
     {
         return self::$current_page;
+    }
+
+    /**
+     * @param mixed $current_page
+     */
+    public static function setCurrentPage($current_page)
+    {
+        self::$current_page = $current_page;
     }
 
     public static function getParam($key) {

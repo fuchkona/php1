@@ -84,7 +84,9 @@ body {
 
 .text-input {
   min-width: 40%;
+  max-width: 100%;
   padding: 18px 20px;
+  margin: 6px 0;
   border: 1px solid #eaeaea; }
 
 .btn {
@@ -94,7 +96,8 @@ body {
   margin: 3px 0 6px;
   font-family: Lato, serif;
   border: none;
-  cursor: pointer; }
+  cursor: pointer;
+  text-align: center; }
   .btn-block {
     width: 100%; }
   .btn-big {

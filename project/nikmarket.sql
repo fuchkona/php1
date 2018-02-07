@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.3
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 07 2018 г., 15:13
--- Версия сервера: 5.7.20
--- Версия PHP: 7.2.0
+-- Время создания: Фев 07 2018 г., 17:47
+-- Версия сервера: 5.7.19
+-- Версия PHP: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -55,7 +55,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`u_id`, `name`, `login`, `pass`, `role`) VALUES
-(1, '', 'nikita', '$2y$10$VsjG5mseWsy78F4K3UO6tOcWWZVMsQpWFpTQ4SjDyxa5tEeR08SrS', 0),
+(1, 'Fuchko Nikita', 'nikita', '$2y$10$VsjG5mseWsy78F4K3UO6tOcWWZVMsQpWFpTQ4SjDyxa5tEeR08SrS', 255),
 (2, 'Testerov', 'test1', '$2y$10$j0OA1FOJESbN5cZDygGDhOSsxqDrvw1Vkh3oRdg9qM3izAUyXCQrW', 0),
 (3, 'Testerov', 'test2', '$2y$10$VTbaGjMPQRspGWPLMFSZAunOuB.3ozWnhRKS7vblN5IheNHCXlavi', 0);
 
@@ -85,13 +85,11 @@ ALTER TABLE `users`
 --
 ALTER TABLE `goods`
   MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-COMMIT;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

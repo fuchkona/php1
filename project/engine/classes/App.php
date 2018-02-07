@@ -13,6 +13,18 @@ class App
 {
     private $user;
 
+
+    public function __construct()
+    {
+        Router::init();
+        if (file_exists(HOME . '/ui/pages/' . Router::getCurrentPage() . '.php')) {
+            require_once HOME . '/ui/layouts/main.php';
+        } else {
+            Router::setCurrentPage(null);
+        }
+        DB::close();
+    }
+
     /**
      * @return mixed
      */
