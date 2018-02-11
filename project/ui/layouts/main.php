@@ -23,7 +23,7 @@ use engine\classes\Router;
     <div>
         <?php
         if (Router::getCurrentPage()) {
-            require_once __DIR__ . '/../pages/' . Router::getCurrentPage() . '.php';
+            require_once Router::getFullPathToCurrentPage();
         } else {
             ?>
             <h2>Sorry! Page not found!</h2>

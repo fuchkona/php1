@@ -30,7 +30,7 @@ class User
         $this->load();
     }
 
-    public function load($login = null)
+    function load($login = null)
     {
         $sql = null;
         if ($login) {

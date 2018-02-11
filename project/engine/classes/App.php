@@ -8,28 +8,38 @@
 
 namespace engine\classes;
 
-
 class App
 {
-    private $user;
+    /** @var  User */
+    private static $user;
 
+    private function __construct()
+    {
+    }
 
-    public function __construct()
+    public static function init()
     {
         Router::init();
-        if (file_exists(HOME . '/ui/pages/' . Router::getCurrentPage() . '.php')) {
-            require_once HOME . '/ui/layouts/main.php';
-        } else {
-            Router::setCurrentPage(null);
-        }
+        Router::initAction();
+        self::initUser();
+        Router::renderPage();
         DB::close();
+    }
+
+    private static function initUser()
+    {
+        $auth = new Auth();
+        $auth->load_by_secret($_SESSION['auth_secret']);
+        if ($auth->verifyAgent($_SERVER['HTTP_USER_AGENT'])) {
+            self::$user = new User($auth->getUId());
+        }
     }
 
     /**
      * @return mixed
      */
-    public function getUser()
+    public static function getUser()
     {
-        return $this->user;
+        return self::$user;
     }
 }
