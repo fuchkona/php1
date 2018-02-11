@@ -89,8 +89,16 @@ body {
   margin: 6px 0;
   border: 1px solid #eaeaea; }
 
+.first-letter-up {
+  display: inline-block; }
+  .first-letter-up:first-letter {
+    text-transform: uppercase; }
+
+a {
+  color: inherit;
+  text-decoration: none; }
+
 .btn {
-  display: block;
   padding: 5px 10px;
   text-decoration: none;
   margin: 3px 0 6px;
@@ -99,6 +107,7 @@ body {
   cursor: pointer;
   text-align: center; }
   .btn-block {
+    display: block;
     width: 100%; }
   .btn-big {
     margin: 6px 0;

@@ -15,6 +15,8 @@ class Good
     private $g_id;
     private $title;
     private $description;
+    private $price;
+    private $visits;
 
     public function __construct($id = null)
     {
@@ -28,6 +30,8 @@ class Good
             if ($row = DB::getRow("SELECT * FROM `goods` WHERE `g_id` = " . DB::esc($this->g_id))) {
                 $this->title = $row['title'];
                 $this->description = $row['description'];
+                $this->price = $row['price'];
+                $this->visits = $row['visits'];
             } else {
                 $this->g_id = null;
             }
@@ -37,13 +41,14 @@ class Good
     public function save()
     {
         if (!is_null($this->g_id) && is_numeric($this->g_id)) {
-            DB::update("UPDATE `goods` SET `title` = '" . DB::esc($this->title) . "', `description` = '" . DB::esc($this->description) . "' WHERE `g_id` = " . DB::esc($this->g_id));
+            DB::update("UPDATE `goods` SET `title` = '" . DB::esc($this->title) . "', `description` = '" . DB::esc($this->description) . "', `price` = " . DB::esc($this->price) . " WHERE `g_id` = " . DB::esc($this->g_id));
         } else {
-            $this->g_id = DB::insert("INSERT INTO `goods`(`title`, `description`) VALUES ('" . DB::esc($this->title) . "', '" . DB::esc($this->description) . "');");
+            $this->g_id = DB::insert("INSERT INTO `goods`(`title`, `description`, `price`) VALUES ('" . DB::esc($this->title) . "', '" . DB::esc($this->description) . "', " . DB::esc($this->price) . ");");
         }
     }
 
-    public function delete() {
+    public function delete()
+    {
         DB::delete("DELETE FROM `goods` WHERE `g_id` = " . DB::esc($this->g_id));
     }
 
@@ -54,6 +59,8 @@ class Good
             $good = new Good($db_good['g_id']);
             $good->setTitle($db_good['title']);
             $good->setDescription($db_good['description']);
+            $good->setPrice($db_good['price']);
+            $good->setVisits($db_good['visits']);
             $goods[] = $good;
         }
         return $goods;
@@ -107,5 +114,44 @@ class Good
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * @param mixed $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    public function incVisits()
+    {
+        if ($this->g_id) {
+            $this->visits++;
+            $this->save();
+        }
+    }
 
 }
