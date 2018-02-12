@@ -40,7 +40,10 @@ $(function () {
     $('.products-item').on('click', '.products-item-hover, .products-item-title', function (e) {
         if (e.target !== this)
             return;
-        goToUrl('/product')
+        var $target = $(e.target);
+        var $container = $target.closest('.products-item');
+        var $id = $container.attr('id').match(/\d+/)[0];
+        goToUrl('/product/id/' + $id);
     });
 
     $('.add-to-cart-btn').on('click', function (e) {

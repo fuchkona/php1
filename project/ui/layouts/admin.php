@@ -25,7 +25,7 @@ if ($user = App::getUser()) {
         <?php require_once __DIR__ . '/admin/header.php' ?>
         <?php require_once __DIR__ . '/admin/top_navigation.php' ?>
         <!-- Content -->
-        <div>
+        <div class="spaced-container">
             <?php
             if (Router::getCurrentPage()) {
                 require_once Router::getFullPathToCurrentPage();

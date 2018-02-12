@@ -99,6 +99,7 @@ a {
   text-decoration: none; }
 
 .btn {
+  display: inline-block;
   padding: 5px 10px;
   text-decoration: none;
   margin: 3px 0 6px;
@@ -107,7 +108,6 @@ a {
   cursor: pointer;
   text-align: center; }
   .btn-block {
-    display: block;
     width: 100%; }
   .btn-big {
     margin: 6px 0;
@@ -1529,5 +1529,16 @@ a {
   .my-account-panel.show {
     visibility: visible;
     opacity: 1; }
+
+.table {
+  min-width: 100%;
+  border: 1px solid darkgrey;
+  border-collapse: collapse; }
+  .table th, .table td {
+    padding: 3px;
+    border: 1px solid darkgrey; }
+
+.hidden {
+  display: none; }
 
 /*# sourceMappingURL=main_new.css.map */

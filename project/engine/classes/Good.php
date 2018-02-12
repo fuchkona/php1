@@ -17,6 +17,7 @@ class Good
     private $description;
     private $price;
     private $visits;
+    private $photo;
 
     public function __construct($id = null)
     {
@@ -32,6 +33,7 @@ class Good
                 $this->description = $row['description'];
                 $this->price = $row['price'];
                 $this->visits = $row['visits'];
+                $this->photo = $row['photo'];
             } else {
                 $this->g_id = null;
             }
@@ -41,14 +43,15 @@ class Good
     public function save()
     {
         if (!is_null($this->g_id) && is_numeric($this->g_id)) {
-            DB::update("UPDATE `goods` SET `title` = '" . DB::esc($this->title) . "', `description` = '" . DB::esc($this->description) . "', `price` = " . DB::esc($this->price) . " WHERE `g_id` = " . DB::esc($this->g_id));
+            return DB::update("UPDATE `goods` SET `title` = '" . DB::esc($this->title) . "', `description` = '" . DB::esc($this->description) . "', `price` = " . DB::esc($this->price) . ", `photo` = '" . DB::esc($this->photo) . "' WHERE `g_id` = " . DB::esc($this->g_id));
         } else {
-            $this->g_id = DB::insert("INSERT INTO `goods`(`title`, `description`, `price`) VALUES ('" . DB::esc($this->title) . "', '" . DB::esc($this->description) . "', " . DB::esc($this->price) . ");");
+            return $this->g_id = DB::insert("INSERT INTO `goods`(`title`, `description`, `price`, `photo`) VALUES ('" . DB::esc($this->title) . "', '" . DB::esc($this->description) . "', " . DB::esc($this->price) . ", '" . DB::esc($this->photo) . "');");
         }
     }
 
     public function delete()
     {
+        GoodsCategories::deleteGoodCategories($this->g_id);
         DB::delete("DELETE FROM `goods` WHERE `g_id` = " . DB::esc($this->g_id));
     }
 
@@ -56,14 +59,48 @@ class Good
     {
         $goods = [];
         foreach (DB::getRows("SELECT * FROM `goods`;") as $db_good) {
-            $good = new Good($db_good['g_id']);
-            $good->setTitle($db_good['title']);
-            $good->setDescription($db_good['description']);
-            $good->setPrice($db_good['price']);
-            $good->setVisits($db_good['visits']);
-            $goods[] = $good;
+            $goods[] = new Good($db_good['g_id']);
         }
         return $goods;
+    }
+
+    public static function getTopGoods($count)
+    {
+        $goods = [];
+        foreach (DB::getRows("SELECT * FROM `goods` ORDER BY `visits` DESC LIMIT {$count};") as $db_good) {
+            $goods[] = new Good($db_good['g_id']);
+        }
+        return $goods;
+    }
+
+    public function getCategories()
+    {
+        $categories = [];
+        /** @var GoodsCategories $goodCategory */
+        foreach (GoodsCategories::getGoodCategories($this->g_id) as $goodCategory) {
+            $categories[] = new Category($goodCategory->getCId());
+        }
+        return $categories;
+    }
+
+    public function getCategoriesId()
+    {
+        $ids = [];
+        /** @var Category $category */
+        foreach ($this->getCategories() as $category) {
+            $ids[] = $category->getCId();
+        }
+        return $ids;
+    }
+
+    public function getCategoriesTitle()
+    {
+        $titles = [];
+        /** @var Category $category */
+        foreach ($this->getCategories() as $category) {
+            $titles[] = $category->getTitle();
+        }
+        return $titles;
     }
 
     /**
@@ -152,6 +189,25 @@ class Good
             $this->visits++;
             $this->save();
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        if ($this->photo) {
+            unlink(HOME . '/public/images/dproducts/' . $this->photo);
+        }
+        $this->photo = $photo;
     }
 
 }

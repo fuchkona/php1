@@ -31,7 +31,7 @@ Cart.prototype.render = function () {
             var $title = $('<a />', {
                 class: 'main-cart-good-title',
                 text: tempGood.title,
-                href: '#'
+                href: '/product/id/' + this.goods[key].g_id
             });
             $good.append($title);
 

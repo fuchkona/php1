@@ -58,7 +58,8 @@ class DB
      */
     public static function esc($input) {
         self::open();
-        return self::$connection->real_escape_string($input);
+        $result = self::$connection->real_escape_string($input);
+        return $result ? $result : "NULL";
     }
 
     /**

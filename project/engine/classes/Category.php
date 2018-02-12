@@ -27,7 +27,7 @@ class Category
         if (!$sql && !is_null($this->c_id) && is_numeric($this->c_id)) {
             $sql = "SELECT * FROM `categories` WHERE `c_id` = " . $this->c_id;
         }
-        if ($row = DB::getRow($sql)) {
+        if ($sql && $row = DB::getRow($sql)) {
             $this->c_id = $row['c_id'];
             $this->title = $row['title'];
             $this->parent = $row['parent'];
@@ -36,7 +36,8 @@ class Category
         }
     }
 
-    public function save() {
+    public function save()
+    {
         if (!is_null($this->c_id) && is_numeric($this->c_id)) {
             DB::update("UPDATE `categories` SET `title` = '" . DB::esc($this->title) . "', `parent` = " . DB::esc($this->parent) . " WHERE `c_id` = " . DB::esc($this->c_id));
         } else {
@@ -46,17 +47,62 @@ class Category
 
     public function delete()
     {
-        DB::delete("DELETE FROM `categories` WHERE `c_id` = " . DB::esc($this->c_id));
+        /** @var Category $child */
+        foreach ($this->getChildren() as $child) {
+            $child->delete();
+        }
+        GoodsCategories::getCategoryGoods($this->c_id);
+        return DB::delete("DELETE FROM `categories` WHERE `c_id` = " . DB::esc($this->c_id));
     }
 
     public function getChildren()
     {
         $categories = [];
-        foreach (DB::getRows("SELECT * FROM `categories` WHERE `parent` = " . DB::esc($this->parent)) as $db_category) {
+        foreach (DB::getRows("SELECT * FROM `categories` WHERE `parent` = " . DB::esc($this->c_id)) as $db_category) {
             $category = new Category($db_category['c_id']);
             $category->setTitle($db_category['title']);
             $category->setParent($db_category['parent']);
             $categories[] = $category;
+        }
+        return $categories;
+    }
+
+    public function getAllChildren()
+    {
+        $children = $this->getChildren();
+        $result_children = [];
+        /** @var Category $child */
+        foreach ($children as $child) {
+            $result_children[] = ['object' => ['id' => $child->getCId(), 'name' => $child->getTitle()], 'children' => $child->getAllChildren()];
+        }
+        return $result_children;
+    }
+
+    public static function getMainCategories()
+    {
+        $categories = [];
+        foreach (DB::getRows("SELECT * FROM `categories` WHERE `parent` IS NULL") as $db_category) {
+            $categories[] = new Category($db_category['c_id']);
+        }
+        return $categories;
+    }
+
+    public static function getTreeOfCategories()
+    {
+        $categories = self::getMainCategories();
+        $result_categories = [];
+        /** @var Category $category */
+        foreach ($categories as $category) {
+            $result_categories[] = ['object' => ['id' => $category->getCId(), 'name' => $category->getTitle()], 'children' => $category->getAllChildren()];
+        }
+        return $result_categories;
+    }
+
+    public static function getAllCategories()
+    {
+        $categories = [];
+        foreach (DB::getRows("SELECT * FROM `categories`") as $db_category) {
+            $categories[] = new Category($db_category['c_id']);
         }
         return $categories;
     }

@@ -67,12 +67,7 @@ class User
     {
         $users = [];
         foreach (DB::getRows("SELECT * FROM `users`;") as $db_user) {
-            $user = new User($db_user['u_id']);
-            $user->setLogin($db_user['login']);
-            $user->setName($db_user['name']);
-            $user->setPass($db_user['pass']);
-            $user->setRole($db_user['role']);
-            $users[] = $user;
+            $users[] = new User($db_user['u_id']);
         }
         return $users;
     }
@@ -155,7 +150,9 @@ class User
      */
     public function setRole($role)
     {
-        $this->role = $role;
+        if (App::getUser()->getRole() == 255) {
+            $this->role = $role;
+        }
     }
 
     public function isAdmin()

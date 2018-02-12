@@ -1,19 +1,15 @@
 <div class="container content">
     <div class="single-product-body">
-        <div class="single-product-category-name">WOMEN COLLECTION</div>
+        <div class="single-product-category-name"><?= implode(', ', $good->getCategoriesTitle()) ?></div>
         <div class="single-product-devider-1">
             <div class="dev-light"></div>
             <div class="dev-heavy"></div>
             <div class="dev-light"></div>
         </div>
         <article>
-            <h2 class="single-product-name">Moschino Cheap And Chic</h2>
+            <h2 class="single-product-name"><?= $good->getTitle() ?></h2>
             <p class="single-product-description">
-                Compellingly actualize fully researched processes before proactive outsourcing. Progressively
-                syndicate
-                collaborative architectures before cutting-edge services. Completely visualize parallel core
-                competencies
-                rather than exceptional portals.
+                <?= $good->getDescription() ?>
             </p>
         </article>
         <div class="single-product-material-and-design">
@@ -24,7 +20,7 @@
                 DESIGNER: <span>BINBURHAN</span>
             </div>
         </div>
-        <div class="single-product-price">$561</div>
+        <div class="single-product-price">$<?= $good->getPrice() ?></div>
         <div class="single-product-devider-line"></div>
         <div class="single-product-filter-box">
             <div>
