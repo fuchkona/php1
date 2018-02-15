@@ -42,11 +42,13 @@ if (isset($_POST['good_add']) || $_POST['good_edit']) {
     $good->save();
 
     GoodsCategories::deleteGoodCategories($good->getId());
-    foreach ($_POST['categories'] as $category) {
-        $gc = new GoodsCategories();
-        $gc->setGId($good->getId());
-        $gc->setCId($category);
-        $gc->save();
+    if ($_POST['categories'] && count($_POST['categories'])) {
+        foreach ($_POST['categories'] as $category) {
+            $gc = new GoodsCategories();
+            $gc->setGId($good->getId());
+            $gc->setCId($category);
+            $gc->save();
+        }
     }
 }
 
